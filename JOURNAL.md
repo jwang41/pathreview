@@ -20,4 +20,4 @@
 - [x] App runs locally at localhost:5173
 
 **Cohort ledger:**
-- [ ] Issue 158 added to cohort ledger
+- [x] Issue 158 added to cohort ledger
