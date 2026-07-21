@@ -15,4 +15,4 @@
 
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
-**Cohort ledger:** [x] Issue added to cohort ledger
+**Cohort ledger:** [ ] Issue added to cohort ledger
