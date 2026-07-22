@@ -37,7 +37,7 @@
 **Reproduction summary:**
 Ran `pytest tests/unit/test_review_service.py -q` before making any changes and observed the exact failure mode described in issue #158: 13 failed, 6 passed, with `AttributeError: 'coroutine' object has no attribute 'first'` (or `'all'`) on every failing test, confirming the mock misconfiguration was the root cause rather than a bug in `review_service.py` itself.
 
-**PLAN.md link:** [pending — planning framework not yet provided]
+**PLAN.md link:** https://github.com/jwang41/pathreview/blob/fix/158-review-service-unit-tests-misconfigure-async-mocks/PLAN.md
 
 **Walkthrough video (recommended):** [not recorded]
 
