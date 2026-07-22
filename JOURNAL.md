@@ -29,3 +29,17 @@
 
 **Cohort ledger:**
 - [x] Issue 158 added to cohort ledger
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** https://github.com/jwang41/pathreview/commit/3d248a7
+
+**Reproduction summary:**
+Ran `pytest tests/unit/test_review_service.py -q` before making any changes and observed the exact failure mode described in issue #158: 13 failed, 6 passed, with `AttributeError: 'coroutine' object has no attribute 'first'` (or `'all'`) on every failing test, confirming the mock misconfiguration was the root cause rather than a bug in `review_service.py` itself.
+
+**PLAN.md link:** [pending — planning framework not yet provided]
+
+**Walkthrough video (recommended):** [not recorded]
+
+**Blockers or open questions:**
+
