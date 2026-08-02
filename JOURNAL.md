@@ -43,3 +43,37 @@ Ran `pytest tests/unit/test_review_service.py -q` before making any changes and 
 
 **Blockers or open questions:**
 
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+All of PLAN.md's sub-tasks are done: reproduced the failure (13/19 failing, confirmed via `pytest tests/unit/test_review_service.py -q`), confirmed the async boundary in `review_service.py` is correct, swapped `mock_result = AsyncMock()` → `Mock()` in all 13 affected tests, and separately fixed `test_list_reviews_ordered_by_created_at`'s `assert_called_once()` bug (the function correctly calls `execute()` twice — once for count, once for the paginated query — so the assertion itself was wrong, not the mock). All 19 tests pass, and the branch, `JOURNAL.md`, and `PLAN.md` are committed and pushed.
+
+**Next steps:**
+Open the PR (I don't currently have GitHub CLI/API write access set up in this environment to do it programmatically, so this needs to happen through the browser), then respond to any review feedback.
+
+**Blockers:**
+None on the fix itself. `make check`/`make test-unit` surface a large amount of pre-existing, unrelated repo-wide debt (179 ruff errors, 5 mypy errors, 40 failing unit tests elsewhere) — confirmed none of it is in `review_service.py` or `test_review_service.py`, and none of it is something this issue asked me to fix.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** [pending — not yet opened]
+
+**Branch:** `fix/158-review-service-unit-tests-misconfigure-async-mocks`
+
+**What you built:**
+Fixed 13 of 19 failing tests in `test_review_service.py` by correcting a mock-construction bug: the tests mocked the object returned by `db.execute()` as `AsyncMock`, whose auto-created child attributes are themselves `AsyncMock`, so `.scalars()` returned an unawaited coroutine instead of a real result object. `db.execute()` is the only real async boundary in SQLAlchemy's async API — everything chained after it (`.scalars()`, `.first()`, `.all()`) is synchronous — so the fix uses `AsyncMock` only for `execute()` and a plain `Mock` for what it returns. Also fixed one test's incorrect `assert_called_once()` expectation.
+
+**Tests added or updated:**
+`tests/unit/test_review_service.py` — updated (no new test file). Covers `get_review()` (correct-owner match, wrong-user → `None`), `list_reviews()` (pagination, total count, ordering by `created_at` descending), and `create_review()` (status defaults). No production code changed — `core/services/review_service.py` was already correct.
+
+**Self-review confirmation:**
+- [x] `pytest tests/unit/test_review_service.py -q` passes (19/19)
+- [ ] `make check` passes clean repo-wide — it does not; see Blockers above for the pre-existing, unrelated failures it surfaces
+- [ ] `make test-unit` passes clean repo-wide — same caveat: 388 passed / 40 failed, all 40 pre-existing and unrelated to this issue
+
+**Draft PR feedback received from:** none — no PR opened yet
+
