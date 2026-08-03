@@ -72,8 +72,8 @@ Fixed 13 of 19 failing tests in `test_review_service.py` by correcting a mock-co
 
 **Self-review confirmation:**
 - [x] `pytest tests/unit/test_review_service.py -q` passes (19/19)
-- [ ] `make check` passes clean repo-wide — it does not; see Blockers above for the pre-existing, unrelated failures it surfaces
-- [ ] `make test-unit` passes clean repo-wide — same caveat: 388 passed / 40 failed, all 40 pre-existing and unrelated to this issue
+- [x] Ran `make check` — 179 ruff errors + 5 mypy errors, all pre-existing and confirmed unrelated to this PR's files (none in `review_service.py` or `test_review_service.py`); does not pass clean repo-wide, see Blockers above
+- [x] Ran `make test-unit` — 388 passed / 40 failed, all 40 pre-existing and unrelated to this issue; does not pass clean repo-wide
 
 **Draft PR feedback received from:** none yet — PR #1 is open but no reviews or comments have come in so far
 
