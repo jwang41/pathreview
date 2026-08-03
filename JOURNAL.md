@@ -75,5 +75,5 @@ Fixed 13 of 19 failing tests in `test_review_service.py` by correcting a mock-co
 - [ ] `make check` passes clean repo-wide — it does not; see Blockers above for the pre-existing, unrelated failures it surfaces
 - [ ] `make test-unit` passes clean repo-wide — same caveat: 388 passed / 40 failed, all 40 pre-existing and unrelated to this issue
 
-**Draft PR feedback received from:** none — no PR opened yet
+**Draft PR feedback received from:** none yet — PR #1 is open but no reviews or comments have come in so far
 
