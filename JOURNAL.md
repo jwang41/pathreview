@@ -60,7 +60,7 @@ None on the fix itself. `make check`/`make test-unit` surface a large amount of 
 
 ### Check-in 2 (end of week)
 
-**PR link:** [pending — not yet opened]
+**PR link:** https://github.com/jwang41/pathreview/pull/1
 
 **Branch:** `fix/158-review-service-unit-tests-misconfigure-async-mocks`
 
