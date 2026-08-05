@@ -77,3 +77,36 @@ Fixed 13 of 19 failing tests in `test_review_service.py` by correcting a mock-co
 
 **Draft PR feedback received from:** none yet — PR #1 is open but no reviews or comments have come in so far
 
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [x] Yes  [ ] No — still awaiting review
+
+**Summary of feedback:**
+Reviewer noted that Check-in 2 describes the fix clearly and references issue #158, and that the testing instructions mention running the pytest command. They flagged that no PR template content was visible to verify all sections were filled in, and awarded partial credit on that basis.
+
+**How you responded:**
+Went back to PR #1 and filled in the PR description template directly (problem summary, root cause, fix, and testing steps) instead of leaving it to be inferred from the journal/commit history, so the review criteria could be checked against the PR itself rather than requiring a reviewer to cross-reference JOURNAL.md.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Distinguishing "my bug" from the repo's pre-existing debt. `make check` and `make test-unit` surfaced 179 ruff errors, 5 mypy errors, and 40 unrelated failing tests, and I had to verify carefully (file by file) that none of it touched `review_service.py` or `test_review_service.py` before I could call the fix done. It also took longer than expected to realize I didn't have GitHub CLI/API write access set up, which meant opening the PR by hand through the browser instead of scripting it.
+
+**What did you learn about working in a large codebase?**
+"Done" doesn't mean the whole repo is clean — it means your change doesn't add to what's already broken, and you can prove it. I learned to lean on `git blame`/targeted test runs to scope a failure to my change versus pre-existing debt, rather than assuming a red `make check` means my PR is wrong.
+
+**How did AI tools help — and where did they fall short?**
+AI assistance was most useful for the actual diagnosis: recognizing that `AsyncMock`'s auto-mocked children explain the `'coroutine' object has no attribute 'first'` errors, and mapping out exactly which chain (`.scalars().first()` vs `.scalars().all()` called twice) each test needed. It fell short on anything requiring real-world action outside the repo — opening the PR, and now, going back to fill in the PR template after review feedback — those needed me to actually use the GitHub UI, not just generate text.
+
+**What would you do differently if you started over?**
+Fill out the PR description template completely at submission time instead of pointing to the journal for context — the reviewer's partial-credit note was entirely about template completeness, not the fix itself, so this was an avoidable gap.
+
+A reviewer also pointed out that my instinct to double-check each test's `.first.return_value`/`.all.return_value` setup against the service function's actual call chain was the right one — but I only wrote that reasoning in JOURNAL.md, not in the test file itself. Next time I'd add a short comment at each mock setup (e.g. `# get_review calls .scalars().first(), so mock_result must be a plain Mock`) so the "why" travels with the code instead of living in a separate document a future contributor might never read.
+
+**What are you most proud of from this module?**
+Fixing the mock bug consistently across all 13 failing tests using one root-cause pattern (`AsyncMock` only at `execute()`, plain `Mock` below it) instead of patching each test's symptom individually.
+
